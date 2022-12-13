@@ -98,14 +98,14 @@ public class EvalCoin {
 		String prismLocation = Config.prismLocation();
 		InputSymbol[] inputs = new InputSymbol[] { new InputSymbol("go1"), new InputSymbol("go2") };
 
-		Adapter adapter = new MatrixExportAdapter("src/main/resources/shared_coin/"
+		Adapter adapter = new MatrixExportAdapter("core/src/main/resources/shared_coin/"
 				+ "coin2");
 
-		String prismFile = "src/main/resources/shared_coin/coin2.prism";
-		String propertiesFile = "src/main/resources/shared_coin/coin2.props";
+		String prismFile = "core/src/main/resources/shared_coin/coin2.prism";
+		String propertiesFile = "core/src/main/resources/shared_coin/coin2.props";
 
 		int[] properties = new int[] { 6,1 };
-		String path = "../log_extended/shared_coin/";
+		String path = "log_extended/shared_coin/";
 
 		Experiment monolithicExperiment = new Experiment(path, monolithic(adapter, inputs, prismLocation), adapter,
 				seeds, propertiesFile, "monolithic", properties);

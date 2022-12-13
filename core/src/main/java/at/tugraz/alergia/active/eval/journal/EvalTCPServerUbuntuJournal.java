@@ -134,17 +134,17 @@ public class EvalTCPServerUbuntuJournal {
 				new InputSymbol("ACK_plus_RST_paren_V_c_V_c_0_paren_"), new InputSymbol("CLOSE"),
 				new InputSymbol("ACK_paren_V_c_V_c_0_paren_") };
 
-		Adapter adapter = new MatrixExportAdapter("src/main/resources/tcp/tcp_server_ubuntu");
+		Adapter adapter = new MatrixExportAdapter("core/src/main/resources/tcp/tcp_server_ubuntu");
 
-		String prismFile = "src/main/resources/tcp/tcp_server_ubuntu.prism";
-		String propertiesFile = "src/main/resources/tcp/crash.props";
+		String prismFile = "core/src/main/resources/tcp/tcp_server_ubuntu.prism";
+		String propertiesFile = "core/src/main/resources/tcp/crash.props";
 
 		int lowerBound = 0;
 		int upperBound = 5;
 		int[] properties = new int[upperBound - lowerBound];
 		for (int i = lowerBound; i < upperBound; i++)
 			properties[i - lowerBound] = i + 1;
-		String path = "../log_extended/tcp/";
+		String path = "log_extended/tcp/";
 		Experiment baseline = new Experiment(path, baseline(adapter, inputs, prismLocation), adapter, seeds,
 				propertiesFile, "baseline", properties);
 		baseline.run();

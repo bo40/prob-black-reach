@@ -36,31 +36,33 @@ import at.tugraz.alergia.active.strategy.adversary.AdversaryBasedTestStrategy;
 import at.tugraz.alergia.data.InputOutputStep;
 import at.tugraz.alergia.data.InputSymbol;
 
-public class EvalSlotR5EvalRounds {
-	public static long[] seeds = {1000l, 2000l, 3000l, 4000l, 5000l, 6000l, 7000l, 8000l, 9000l, 10000l, 11000l,
-						12000l, 13000l, 14000l, 15000l, 16000l, 17000l, 18000l, 19000l, 110000l 
+public class EvalEmqttRounds {
+	public static long[] seeds = {1000l, 2000l, 3000l, 4000l, 5000l, 6000l, 7000l, 8000l, 9000l, 10000l//, 11000l,
+						// 12000l, 13000l, 14000l, 15000l, 16000l, 17000l, 18000l, 19000l, 110000l 
 	};
 	private static String logFileName = null;
 
 	public static void main(String[] args) throws Exception {
 
 		String prismLocation = Config.prismLocation();
-		InputSymbol[] inputs = new InputSymbol[] { new InputSymbol("stop"), new InputSymbol("spin1"),
-				new InputSymbol("spin2"), new InputSymbol("spin3") };
+		InputSymbol[] inputs = new InputSymbol[] { new InputSymbol("ConnectC2"), new InputSymbol("ConnectC1WithWill"),
+				new InputSymbol("PublishQoS0C2"), new InputSymbol("PublishQoS1C1"), new InputSymbol("SubscribeC1"),
+				new InputSymbol("UnSubScribeC1"), new InputSymbol("SubscribeC2"), new InputSymbol("UnSubScribeC2"),
+				new InputSymbol("DisconnectTCPC1") };
 
-		Adapter adapter = new MatrixExportAdapter("core/src/main/resources/slot_machine_step_count_r5/slot_machine");
+		Adapter adapter = new MatrixExportAdapter("core/src/main/resources/mqtt/emqtt_two_client");
 
-		String propertiesFile = "core/src/main/resources/slot_machine_step_count_r5/Pr10_R111.props";
+		String propertiesFile = "core/src/main/resources/mqtt/emqtt_two_client.props";
 
-		int property = 9;
-		String path = "log_journal/eval_each_round/log_sc_14_rounds_80";
+		int property = 4;
+		String path = "log_journal/eval_each_round/log_mqtt_14_rounds_500";
 		logFileName = path + ".log";
 		List<List<Double>> allEvaluations = new ArrayList<>();
 		for (long seed : seeds) {
 			System.out.println("SEED: " + seed);
-			ActiveTestingStrategyInference inferrer = at.tugraz.alergia.active.eval.journal.EvalSlotR5Pr10R111.incremental(adapter, inputs, prismLocation);
+			ActiveTestingStrategyInference inferrer = at.tugraz.alergia.active.eval.journal.EvalEmqttTwoClientJournal.incremental(adapter, inputs, prismLocation);
 			inferrer.setEvalEachRound(true);
-			inferrer.setMaxNrRounds(80);
+			inferrer.setMaxNrRounds(500);
 			adapter.init(seed);
 			inferrer.getStrategy().setSeed(seed);
 			inferrer.getStrategy().init(propertiesFile, property);
@@ -76,7 +78,7 @@ public class EvalSlotR5EvalRounds {
 
 	private static void createMeanGraph(List<List<Double>> allEvaluations) {
 		List<Double> means = new ArrayList<>();
-		for (int round = 0; round < 80; round++) {
+		for (int round = 0; round < 500; round++) {
 			double meanForRound = 0.0;
 			for (List<Double> evals : allEvaluations) {
 				Double evalForRound = evals.get(round);

@@ -36,31 +36,36 @@ import at.tugraz.alergia.active.strategy.adversary.AdversaryBasedTestStrategy;
 import at.tugraz.alergia.data.InputOutputStep;
 import at.tugraz.alergia.data.InputSymbol;
 
-public class EvalSlotR5EvalRounds {
-	public static long[] seeds = {1000l, 2000l, 3000l, 4000l, 5000l, 6000l, 7000l, 8000l, 9000l, 10000l, 11000l,
-						12000l, 13000l, 14000l, 15000l, 16000l, 17000l, 18000l, 19000l, 110000l 
+public class EvalTCPRounds {
+	public static long[] seeds = {1000l, 2000l, 3000l, 4000l, 5000l, 6000l, 7000l, 8000l, 9000l, 10000l//, 11000l,
+						// 12000l, 13000l, 14000l, 15000l, 16000l, 17000l, 18000l, 19000l, 110000l 
 	};
 	private static String logFileName = null;
 
 	public static void main(String[] args) throws Exception {
 
 		String prismLocation = Config.prismLocation();
-		InputSymbol[] inputs = new InputSymbol[] { new InputSymbol("stop"), new InputSymbol("spin1"),
-				new InputSymbol("spin2"), new InputSymbol("spin3") };
+		InputSymbol[] inputs = new InputSymbol[] { new InputSymbol("CLOSECONNECTION"),
+				new InputSymbol("ACK_plus_PSH_paren_V_c_V_c_1_paren_"),
+				new InputSymbol("SYN_plus_ACK_paren_V_c_V_c_0_paren_"), new InputSymbol("RST_paren_V_c_V_c_0_paren_"),
+				new InputSymbol("ACCEPT"), new InputSymbol("FIN_plus_ACK_paren_V_c_V_c_0_paren_"),
+				new InputSymbol("LISTEN"), new InputSymbol("SYN_paren_V_c_V_c_0_paren_"), new InputSymbol("RCV"),
+				new InputSymbol("ACK_plus_RST_paren_V_c_V_c_0_paren_"), new InputSymbol("CLOSE"),
+				new InputSymbol("ACK_paren_V_c_V_c_0_paren_") };
 
-		Adapter adapter = new MatrixExportAdapter("core/src/main/resources/slot_machine_step_count_r5/slot_machine");
+		Adapter adapter = new MatrixExportAdapter("core/src/main/resources/tcp/tcp_server_ubuntu");
 
-		String propertiesFile = "core/src/main/resources/slot_machine_step_count_r5/Pr10_R111.props";
+		String propertiesFile = "core/src/main/resources/tcp/crash.props";
 
-		int property = 9;
-		String path = "log_journal/eval_each_round/log_sc_14_rounds_80";
+		int property = 4;
+		String path = "log_journal/eval_each_round/log_tcp_14_rounds_250";
 		logFileName = path + ".log";
 		List<List<Double>> allEvaluations = new ArrayList<>();
 		for (long seed : seeds) {
 			System.out.println("SEED: " + seed);
-			ActiveTestingStrategyInference inferrer = at.tugraz.alergia.active.eval.journal.EvalSlotR5Pr10R111.incremental(adapter, inputs, prismLocation);
+			ActiveTestingStrategyInference inferrer = at.tugraz.alergia.active.eval.journal.EvalTCPServerUbuntuJournal.incremental(adapter, inputs, prismLocation);
 			inferrer.setEvalEachRound(true);
-			inferrer.setMaxNrRounds(80);
+			inferrer.setMaxNrRounds(250);
 			adapter.init(seed);
 			inferrer.getStrategy().setSeed(seed);
 			inferrer.getStrategy().init(propertiesFile, property);
@@ -76,7 +81,7 @@ public class EvalSlotR5EvalRounds {
 
 	private static void createMeanGraph(List<List<Double>> allEvaluations) {
 		List<Double> means = new ArrayList<>();
-		for (int round = 0; round < 80; round++) {
+		for (int round = 0; round < 250; round++) {
 			double meanForRound = 0.0;
 			for (List<Double> evals : allEvaluations) {
 				Double evalForRound = evals.get(round);

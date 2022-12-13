@@ -118,14 +118,14 @@ public class EvalSlotR5Pr10R111 {
 		InputSymbol[] inputs = new InputSymbol[] { new InputSymbol("stop"), new InputSymbol("spin1"),
 				new InputSymbol("spin2"), new InputSymbol("spin3") };
 
-		Adapter adapter = new MatrixExportAdapter("src/main/resources/slot_machine_step_count_r5/slot_machine");
+		Adapter adapter = new MatrixExportAdapter("core/src/main/resources/slot_machine_step_count_r5/slot_machine");
 		
-		String prismFile = "src/main/resources/slot_machine_step_count_r5/slot_machine.prism";	
-		String propertiesFile = "src/main/resources/slot_machine_step_count_r5/Pr10_R111.props";
+		String prismFile = "core/src/main/resources/slot_machine_step_count_r5/slot_machine.prism";	
+		String propertiesFile = "core/src/main/resources/slot_machine_step_count_r5/Pr10_R111.props";
 		
 		int[] properties = new int[]{7,9};// new int[upperBound - lowerBound];
 
-		String path = "../log_extended/logr5_pr10_r111/";
+		String path = "log_extended/logr5_pr10_r111/";
 		
 		Experiment incrementalExperiment = new Experiment(path, incremental(adapter, inputs, prismLocation), adapter, seeds,
 				propertiesFile, "incremental", properties);

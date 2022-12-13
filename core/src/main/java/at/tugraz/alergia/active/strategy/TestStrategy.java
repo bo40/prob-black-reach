@@ -101,6 +101,7 @@ public abstract class TestStrategy {
 		
 		totalNrSteps = totalNrStepsSave;
 		System.out.println("Estimated probability for property " + estProb);		
+		System.out.println("Probability for property, totalNrSteps : " + estProb + "," + totalNrSteps);
 		return estProb;
 	}
 	

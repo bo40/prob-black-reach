@@ -118,17 +118,17 @@ public class EvalEmqttTwoClientJournal {
 				new InputSymbol("UnSubScribeC1"), new InputSymbol("SubscribeC2"), new InputSymbol("UnSubScribeC2"),
 				new InputSymbol("DisconnectTCPC1") };
 
-		Adapter adapter = new MatrixExportAdapter("src/main/resources/mqtt/emqtt_two_client");
+		Adapter adapter = new MatrixExportAdapter("core/src/main/resources/mqtt/emqtt_two_client");
 
-		String prismFile = "src/main/resources/mqtt/emqtt_two_client.prism";
-		String propertiesFile = "src/main/resources/mqtt/emqtt_two_client.props";
+		String prismFile = "core/src/main/resources/mqtt/emqtt_two_client.prism";
+		String propertiesFile = "core/src/main/resources/mqtt/emqtt_two_client.props";
 
 		int lowerBound = 3;
 		int upperBound = 8;
 		int[] properties = new int[upperBound - lowerBound];
 		for (int i = lowerBound; i < upperBound; i++)
 			properties[i - lowerBound] = i + 1;
-		String path = "../log_extended/emqtt/";
+		String path = "log_extended/emqtt/";
 		Experiment baseline = new Experiment(path, baseline(adapter, inputs, prismLocation), adapter, seeds,
 				propertiesFile, "baseline", properties);
 		baseline.run();

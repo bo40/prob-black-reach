@@ -127,17 +127,17 @@ public class EvalFirstGridworld {
 		String prismLocation = Config.prismLocation();
 		InputSymbol[] inputs = Direction.asInputSymbols();
 
-		Adapter adapter = new MatrixExportAdapter("src/main/resources/gridworld/journal/first");
+		Adapter adapter = new MatrixExportAdapter("core/src/main/resources/gridworld/journal/first");
 
-		String prismFile = "src/main/resources/gridworld/journal/first.prism";
-		String propertiesFile = "src/main/resources/gridworld/journal/first.props";
+		String prismFile = "core/src/main/resources/gridworld/journal/first.prism";
+		String propertiesFile = "core/src/main/resources/gridworld/journal/first.props";
 
 		int lowerBound = 0;
 		int upperBound = 1;
 		int[] properties = new int[upperBound - lowerBound];
 		for (int i = lowerBound; i < upperBound; i++)
 			properties[i - lowerBound] = i + 1;
-		String path = "../log_extended/gridworld/";
+		String path = "log_extended/gridworld/";
 		Experiment baseline = new Experiment(path, baseline(adapter, inputs, prismLocation), adapter, seeds,
 				propertiesFile, "baseline", properties);
 		baseline.run();
