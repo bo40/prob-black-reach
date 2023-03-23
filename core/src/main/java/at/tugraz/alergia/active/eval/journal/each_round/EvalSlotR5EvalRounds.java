@@ -53,14 +53,14 @@ public class EvalSlotR5EvalRounds {
 		String propertiesFile = "core/src/main/resources/slot_machine_step_count_r5/Pr10_R111.props";
 
 		int property = 9;
-		String path = "log_journal/eval_each_round/log_sc_14_rounds_80";
+		String path = "log_journal/eval_each_round/log_sc_14_rounds_2500";
 		logFileName = path + ".log";
 		List<List<Double>> allEvaluations = new ArrayList<>();
 		for (long seed : seeds) {
 			System.out.println("SEED: " + seed);
 			ActiveTestingStrategyInference inferrer = at.tugraz.alergia.active.eval.journal.EvalSlotR5Pr10R111.incremental(adapter, inputs, prismLocation);
 			inferrer.setEvalEachRound(true);
-			inferrer.setMaxNrRounds(80);
+			inferrer.setMaxNrRounds(2500);
 			adapter.init(seed);
 			inferrer.getStrategy().setSeed(seed);
 			inferrer.getStrategy().init(propertiesFile, property);
@@ -76,7 +76,7 @@ public class EvalSlotR5EvalRounds {
 
 	private static void createMeanGraph(List<List<Double>> allEvaluations) {
 		List<Double> means = new ArrayList<>();
-		for (int round = 0; round < 80; round++) {
+		for (int round = 0; round < 2500; round++) {
 			double meanForRound = 0.0;
 			for (List<Double> evals : allEvaluations) {
 				Double evalForRound = evals.get(round);

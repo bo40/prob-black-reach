@@ -41,8 +41,8 @@ import at.tugraz.alergia.data.InputSymbol;
 
 public class EvalSecondRounds {
 	public static long[] seeds = {
-			1000l, 2000l, 3000l, 4000l, 5000l, 6000l, 7000l, 8000l, 9000l, 10000l
-			// 11000l, 12000l, 13000l, 14000l, 15000l, 16000l, 17000l, 18000l, 19000l, 110000l 
+			1000l, 2000l, 3000l, 4000l, 5000l, 6000l, 7000l, 8000l, 9000l, 10000l,
+			 11000l, 12000l, 13000l, 14000l, 15000l, 16000l, 17000l, 18000l, 19000l, 110000l 
 	};
 	private static String logFileName = null;
 
@@ -88,13 +88,13 @@ public class EvalSecondRounds {
 		String propertiesFile = "core/src/main/resources/gridworld/journal/second.props";
 
 		int property = 1;
-		String path = "log_journal/eval_each_round/log_second_gridworld_prop1_500";
+		String path = "log_journal/eval_each_round/log_second_gridworld_prop1_800";
 		logFileName = path + ".log";
 		List<List<Double>> allEvaluations = new ArrayList<>();
 		for (long seed : seeds) {
 			System.out.println("SEED: " + seed);
 			ActiveTestingStrategyInference inferrer = incremental(adapter, inputs, prismLocation);
-			inferrer.setMaxNrRounds(500);
+			inferrer.setMaxNrRounds(800);
 			inferrer.setEvalEachRound(true);
 			adapter.init(seed);
 			inferrer.getStrategy().setSeed(seed);
@@ -111,7 +111,7 @@ public class EvalSecondRounds {
 
 	private static void createMeanGraph(List<List<Double>> allEvaluations) {
 		List<Double> means = new ArrayList<>();
-		for (int round = 0; round < 500; round++) {
+		for (int round = 0; round < 800; round++) {
 			double meanForRound = 0.0;
 			for (List<Double> evals : allEvaluations) {
 				Double evalForRound = evals.get(round);

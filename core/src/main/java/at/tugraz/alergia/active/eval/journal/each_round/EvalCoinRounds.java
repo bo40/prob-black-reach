@@ -37,8 +37,9 @@ import at.tugraz.alergia.data.InputOutputStep;
 import at.tugraz.alergia.data.InputSymbol;
 
 public class EvalCoinRounds {
-	public static long[] seeds = {1000l, 2000l, 3000l, 4000l, 5000l, 6000l, 7000l, 8000l, 9000l, 10000l//, 11000l,
-						// 12000l, 13000l, 14000l, 15000l, 16000l, 17000l, 18000l, 19000l, 110000l 
+	public static long[] seeds = {
+		1000l, 2000l, 3000l, 4000l, 5000l, 6000l, 7000l, 8000l, 9000l, 10000l,
+		11000l, 12000l, 13000l, 14000l, 15000l, 16000l, 17000l, 18000l, 19000l, 110000l
 	};
 	private static String logFileName = null;
 
@@ -53,14 +54,14 @@ public class EvalCoinRounds {
 		String propertiesFile = "core/src/main/resources/shared_coin/coin2.props";
 
 		int property = 1;
-		String path = "log_journal/eval_each_round/log_coin_20_rounds_900";
+		String path = "log_journal/eval_each_round/log_coin_20_rounds_1000";
 		logFileName = path + ".log";
 		List<List<Double>> allEvaluations = new ArrayList<>();
 		for (long seed : seeds) {
 			System.out.println("SEED: " + seed);
 			ActiveTestingStrategyInference inferrer = at.tugraz.alergia.active.eval.journal.EvalCoin.incremental(adapter, inputs, prismLocation);
 			inferrer.setEvalEachRound(true);
-			inferrer.setMaxNrRounds(900);
+			inferrer.setMaxNrRounds(1000);
 			adapter.init(seed);
 			inferrer.getStrategy().setSeed(seed);
 			inferrer.getStrategy().init(propertiesFile, property);
@@ -76,7 +77,7 @@ public class EvalCoinRounds {
 
 	private static void createMeanGraph(List<List<Double>> allEvaluations) {
 		List<Double> means = new ArrayList<>();
-		for (int round = 0; round < 900; round++) {
+		for (int round = 0; round < 1000; round++) {
 			double meanForRound = 0.0;
 			for (List<Double> evals : allEvaluations) {
 				Double evalForRound = evals.get(round);
